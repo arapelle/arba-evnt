@@ -1,3 +1,4 @@
+#include <arba/evnt/version.hpp>
 #include <evnt/evnt.hpp>
 #include <iostream>
 
