@@ -34,14 +34,14 @@ generate_version_macro_header(generated_version_header
 
 ## Headers:
 set(headers
-    include/evnt/event_info.hpp
-    include/evnt/event_listener.hpp
-    include/evnt/event_manager.hpp
-    include/evnt/async_event_queue.hpp
-    include/evnt/event_box.hpp
-    include/evnt/signal.hpp
-    include/evnt/priv/simple_signal.hpp
-    include/evnt/evnt.hpp
+    include/arba/evnt/event_info.hpp
+    include/arba/evnt/event_listener.hpp
+    include/arba/evnt/event_manager.hpp
+    include/arba/evnt/async_event_queue.hpp
+    include/arba/evnt/event_box.hpp
+    include/arba/evnt/signal.hpp
+    include/arba/evnt/priv/simple_signal.hpp
+    include/arba/evnt/evnt.hpp
 )
 
 ## Sources:
