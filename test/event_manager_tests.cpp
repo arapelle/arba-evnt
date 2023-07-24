@@ -10,7 +10,7 @@ public:
 
 TEST(event_manager_tests, test_emit_event_lvalue_reference)
 {
-    evnt::event_manager event_manager;
+    arba::evnt::event_manager event_manager;
     int value = 0;
     event_manager.connect<int_event>([&value](int_event& event)
     {

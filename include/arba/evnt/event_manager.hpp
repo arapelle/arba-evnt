@@ -11,8 +11,11 @@
 #include <mutex>
 #include <cassert>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 class event_box;
 
 class event_manager
@@ -175,4 +178,6 @@ private:
     std::vector<event_box*> event_boxs_;
     std::mutex mutex_;
 };
+
+}
 }

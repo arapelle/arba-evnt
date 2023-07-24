@@ -5,8 +5,11 @@
 #include <vector>
 #include <memory>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 class async_event_queue
 {
 private:
@@ -103,5 +106,6 @@ private:
 private:
     std::vector<async_event_queue_interface_uptr> event_queues_;
 };
-}
 
+}
+}

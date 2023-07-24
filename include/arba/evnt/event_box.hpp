@@ -2,8 +2,11 @@
 
 #include "async_event_queue.hpp"
 
+inline namespace arba
+{
 namespace evnt
 {
+
 class event_box
 {
 public:
@@ -28,4 +31,6 @@ private:
     async_event_queue event_queue_;
     std::mutex mutex_;
 };
+
+}
 }

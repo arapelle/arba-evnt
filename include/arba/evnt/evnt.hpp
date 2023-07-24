@@ -5,8 +5,11 @@
 #include "async_event_queue.hpp"
 #include "event_box.hpp"
 
+inline namespace arba
+{
 namespace evnt
 {
+
 template <class event_type>
 inline void event_listener_base::break_connection(std::size_t connection)
 {
@@ -27,5 +30,7 @@ void event_manager::emit_to_event_boxes_(event_type& event)
         assert(dispatcher);
         dispatcher->push_event<event_type>(event);
     }
+}
+
 }
 }

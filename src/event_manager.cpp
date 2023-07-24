@@ -1,8 +1,11 @@
 #include <arba/evnt/event_manager.hpp>
 #include <arba/evnt/event_box.hpp>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 event_manager::~event_manager()
 {
     std::lock_guard lock(mutex_);
@@ -45,4 +48,5 @@ void event_manager::emit(event_box& event_box, bool pre_sync)
         event_box.event_queue().emit_events(*this);
 }
 
+}
 }

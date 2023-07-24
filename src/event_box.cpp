@@ -1,7 +1,10 @@
 #include <arba/evnt/event_box.hpp>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 event_box::~event_box()
 {
     std::lock_guard lock(mutex_);
@@ -27,5 +30,7 @@ void event_box::set_parent_event_manager(std::nullptr_t)
         assert(parent_event_manager_);
         parent_event_manager_ = nullptr;
     }
+}
+
 }
 }
