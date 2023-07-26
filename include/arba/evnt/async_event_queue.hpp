@@ -34,9 +34,6 @@ private:
             pending_events_.reserve(capacity);
         }
 
-        const std::vector<event_type>& events() const { return events_; }
-        std::vector<event_type>& events() { return events_; }
-
         void push(event_type&& event)
         {
             std::lock_guard<std::mutex> lock(mutex_);
@@ -53,7 +50,7 @@ private:
 
         virtual void emit(event_manager& evt_manager) override
         {
-            evt_manager.emit(events());
+            evt_manager.emit(events_);
         }
 
     private:
@@ -63,12 +60,6 @@ private:
     };
 
 public:
-    template <class event_type>
-    inline const std::vector<event_type>& events()
-    {
-        return get_or_create_event_queue_<event_type>().events();
-    }
-
     template <class event_type>
     inline void push(event_type&& event)
     {
