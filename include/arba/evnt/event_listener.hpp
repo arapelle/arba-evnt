@@ -3,8 +3,11 @@
 #include <atomic>
 #include <cassert>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 class event_manager;
 
 class event_listener_base
@@ -103,4 +106,6 @@ private:
 
     std::size_t connection_;
 };
+
+}
 }

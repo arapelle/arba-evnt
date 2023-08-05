@@ -2,8 +2,11 @@
 
 #include "priv/simple_signal.hpp"
 
+inline namespace arba
+{
 namespace evnt
 {
+
 template <typename SignalSignature,
           class Collector = Simple::Lib::CollectorDefault<typename std::function<SignalSignature>::result_type> >
 using signal = Simple::Signal<SignalSignature, Collector>;
@@ -22,4 +25,6 @@ using Collector_while_0 = Simple::CollectorWhile0<Result>;
 
 template<typename Result>
 using Collector_vector = Simple::CollectorVector<Result>;
+
+}
 }

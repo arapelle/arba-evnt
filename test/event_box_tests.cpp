@@ -1,4 +1,4 @@
-#include <evnt/evnt.hpp>
+#include <arba/evnt/evnt.hpp>
 #include <gtest/gtest.h>
 #include <cstdlib>
 
@@ -10,9 +10,9 @@ public:
 
 TEST(event_box_tests, test_connection)
 {
-    evnt::event_manager event_manager;
+    evnt::event_manager event_manager(1);
     evnt::event_box event_box;
-    evnt::event_manager other_event_manager;
+    evnt::event_manager other_event_manager(1);
 
     int value = 0;
     other_event_manager.connect<int_event>([&value](int_event& event)
@@ -33,10 +33,10 @@ TEST(event_box_tests, test_connection)
 
 TEST(event_box_tests, test_connection_2)
 {
-    evnt::event_manager event_manager;
+    evnt::event_manager event_manager(1);
 
     evnt::event_box event_box;
-    evnt::event_manager other_event_manager;
+    evnt::event_manager other_event_manager(1);
     event_manager.connect(event_box);
     event_manager.emit(int_event{ 5 });
 
@@ -53,12 +53,12 @@ TEST(event_box_tests, test_connection_2)
 
 TEST(event_box_tests, test_auto_deconnection)
 {
-    evnt::event_manager event_manager;
+    evnt::event_manager event_manager(1);
     int value = 0;
 
     {
         evnt::event_box event_box;
-        evnt::event_manager other_event_manager;
+        evnt::event_manager other_event_manager(1);
         other_event_manager.connect<int_event>([&value](int_event& event)
         {
             value = event.value;

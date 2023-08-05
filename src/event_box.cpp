@@ -1,7 +1,10 @@
-#include <evnt/event_box.hpp>
+#include <arba/evnt/event_box.hpp>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 event_box::~event_box()
 {
     std::lock_guard lock(mutex_);
@@ -12,11 +15,12 @@ event_box::~event_box()
     }
 }
 
-void event_box::set_parent_event_manager(event_manager& evt_manager)
+void event_box::set_parent_event_manager(event_manager& evt_manager, std::size_t max_number_event_types)
 {
     std::lock_guard lock(mutex_);
     assert(!parent_event_manager_);
     parent_event_manager_ = &evt_manager;
+    event_queue_.resize(max_number_event_types);
 }
 
 void event_box::set_parent_event_manager(std::nullptr_t)
@@ -27,5 +31,7 @@ void event_box::set_parent_event_manager(std::nullptr_t)
         assert(parent_event_manager_);
         parent_event_manager_ = nullptr;
     }
+}
+
 }
 }

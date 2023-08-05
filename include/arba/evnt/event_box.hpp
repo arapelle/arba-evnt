@@ -2,8 +2,11 @@
 
 #include "async_event_queue.hpp"
 
+inline namespace arba
+{
 namespace evnt
 {
+
 class event_box
 {
 public:
@@ -12,7 +15,7 @@ public:
 private:
     friend class event_manager;
 
-    void set_parent_event_manager(event_manager& evt_manager);
+    void set_parent_event_manager(event_manager& evt_manager, std::size_t max_number_event_types);
     void set_parent_event_manager(std::nullptr_t);
 
     template <class event_type>
@@ -28,4 +31,6 @@ private:
     async_event_queue event_queue_;
     std::mutex mutex_;
 };
+
+}
 }

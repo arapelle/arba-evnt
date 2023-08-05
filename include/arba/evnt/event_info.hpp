@@ -2,8 +2,11 @@
 
 #include <atomic>
 
+inline namespace arba
+{
 namespace evnt
 {
+
 class event_info
 {
     inline static std::size_t generate_type_index_()
@@ -20,4 +23,6 @@ public:
         return index;
     }
 };
+
+}
 }

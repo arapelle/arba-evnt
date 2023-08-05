@@ -1,6 +1,12 @@
-#include <evnt/evnt.hpp>
+#include <arba/evnt/evnt.hpp>
 #include <gtest/gtest.h>
 #include <cstdlib>
+
+TEST(event_manager_tests, test_constructor_no_parameter)
+{
+    arba::evnt::event_manager event_manager;
+    ASSERT_EQ(event_manager.max_number_of_event_types(), 0);
+}
 
 class int_event
 {
@@ -10,7 +16,8 @@ public:
 
 TEST(event_manager_tests, test_emit_event_lvalue_reference)
 {
-    evnt::event_manager event_manager;
+    arba::evnt::event_manager event_manager(1);
+    ASSERT_EQ(event_manager.max_number_of_event_types(), 1);
     int value = 0;
     event_manager.connect<int_event>([&value](int_event& event)
     {
@@ -24,7 +31,7 @@ TEST(event_manager_tests, test_emit_event_lvalue_reference)
 
 TEST(event_manager_tests, test_emit_event_rvalue_reference)
 {
-    evnt::event_manager event_manager;
+    evnt::event_manager event_manager(1);
     int value = 0;
     event_manager.connect<int_event>([&value](int_event& event)
     {
@@ -62,7 +69,7 @@ TEST(event_manager_tests, test_listener_auto_deconnection)
     int value = 0;
 
     {
-        evnt::event_manager event_manager;
+        evnt::event_manager event_manager(1);
 
         {
             int_event_Listener listener(value);
@@ -84,7 +91,7 @@ TEST(event_manager_tests, test_listener_deconnection)
     int value = 0;
 
     {
-        evnt::event_manager event_manager;
+        evnt::event_manager event_manager(1);
 
         {
             int_event_Listener listener(value);
@@ -144,7 +151,8 @@ TEST(event_manager_tests, test_multi_listener_connection_and_auto_deconnection)
     int value_2 = 0;
 
     {
-        evnt::event_manager event_manager;
+        evnt::event_manager event_manager(2);
+        ASSERT_EQ(event_manager.max_number_of_event_types(), 2);
 
         {
             multi_event_listener listener(value, value_2);
@@ -176,7 +184,7 @@ TEST(event_manager_tests, test_multi_listener_deconnections_and_reconnection)
     int value_2 = 0;
 
     {
-        evnt::event_manager event_manager;
+        evnt::event_manager event_manager(2);
 
         {
             multi_event_listener listener(value, value_2);
