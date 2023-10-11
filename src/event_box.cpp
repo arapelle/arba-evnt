@@ -15,12 +15,12 @@ event_box::~event_box()
     }
 }
 
-void event_box::set_parent_event_manager(event_manager& evt_manager, std::size_t max_number_event_types)
+void event_box::set_parent_event_manager(event_manager& evt_manager)
 {
     std::lock_guard lock(mutex_);
     assert(!parent_event_manager_);
     parent_event_manager_ = &evt_manager;
-    event_queue_.resize(max_number_event_types);
+    event_queue_.reserve(evt_manager.number_of_event_types());
 }
 
 void event_box::set_parent_event_manager(std::nullptr_t)

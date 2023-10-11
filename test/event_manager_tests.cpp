@@ -5,7 +5,7 @@
 TEST(event_manager_tests, test_constructor_no_parameter)
 {
     arba::evnt::event_manager event_manager;
-    ASSERT_EQ(event_manager.max_number_of_event_types(), 0);
+    ASSERT_EQ(event_manager.number_of_event_types(), 0);
 }
 
 class int_event
@@ -16,13 +16,13 @@ public:
 
 TEST(event_manager_tests, test_emit_event_lvalue_reference)
 {
-    arba::evnt::event_manager event_manager(1);
-    ASSERT_EQ(event_manager.max_number_of_event_types(), 1);
+    arba::evnt::event_manager event_manager;
     int value = 0;
     event_manager.connect<int_event>([&value](int_event& event)
     {
         value = event.value;
     });
+    ASSERT_EQ(event_manager.number_of_event_types(), 1);
 
     int_event evt{ 5 };
     event_manager.emit(evt);
@@ -31,7 +31,7 @@ TEST(event_manager_tests, test_emit_event_lvalue_reference)
 
 TEST(event_manager_tests, test_emit_event_rvalue_reference)
 {
-    evnt::event_manager event_manager(1);
+    evnt::event_manager event_manager;
     int value = 0;
     event_manager.connect<int_event>([&value](int_event& event)
     {
@@ -69,7 +69,7 @@ TEST(event_manager_tests, test_listener_auto_deconnection)
     int value = 0;
 
     {
-        evnt::event_manager event_manager(1);
+        evnt::event_manager event_manager;
 
         {
             int_event_Listener listener(value);
@@ -91,7 +91,7 @@ TEST(event_manager_tests, test_listener_deconnection)
     int value = 0;
 
     {
-        evnt::event_manager event_manager(1);
+        evnt::event_manager event_manager;
 
         {
             int_event_Listener listener(value);
@@ -151,13 +151,13 @@ TEST(event_manager_tests, test_multi_listener_connection_and_auto_deconnection)
     int value_2 = 0;
 
     {
-        evnt::event_manager event_manager(2);
-        ASSERT_EQ(event_manager.max_number_of_event_types(), 2);
+        evnt::event_manager event_manager;
 
         {
             multi_event_listener listener(value, value_2);
             event_manager.connect<int_event>(listener);
             event_manager.connect<int_event_2>(listener);
+            ASSERT_EQ(event_manager.number_of_event_types(), 2);
 
             event_manager.emit(int_event{ 5 });
             event_manager.emit(int_event_2{ 7 });
@@ -184,7 +184,7 @@ TEST(event_manager_tests, test_multi_listener_deconnections_and_reconnection)
     int value_2 = 0;
 
     {
-        evnt::event_manager event_manager(2);
+        evnt::event_manager event_manager;
 
         {
             multi_event_listener listener(value, value_2);
