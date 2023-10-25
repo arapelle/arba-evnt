@@ -14,6 +14,11 @@ class event_box
 public:
     ~event_box();
 
+    [[nodiscard]] inline const evnt::event_manager* listened_event_manager() const noexcept
+    {
+        return listened_event_manager_;
+    }
+
 private:
     friend class event_manager;
 
