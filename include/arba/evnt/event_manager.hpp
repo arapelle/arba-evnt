@@ -83,7 +83,7 @@ public:
     event_manager(const event_manager&) = delete;
     event_manager& operator=(const event_manager&) = delete;
 
-    inline std::size_t number_of_event_types() { return event_signals_.size(); }
+    std::size_t number_of_event_types() const;
     void reserve(std::size_t number_of_event_types);
 
     // Connect:
@@ -101,7 +101,7 @@ public:
         get_or_create_event_signal_<event_type>().connect(std::move(listener));
     }
 
-    void connect(event_box& dispatcher);
+    void connect(event_box& listening_event_box);
 
     template <class event_type>
     inline void disconnect(std::size_t connection)
@@ -111,7 +111,7 @@ public:
 
     // Disconnect:
 
-    void disconnect(event_box& dispatcher);
+    void disconnect(event_box& listening_event_box);
 
     // Emit events:
 
@@ -183,9 +183,9 @@ private:
     void emit_to_event_boxes_(event_type& event);
 
 private:
-    std::vector<event_signal_interface_uptr> event_signals_;
-    std::vector<event_box*> event_boxs_;
     mutable std::shared_mutex mutex_;
+    std::vector<event_signal_interface_uptr> event_signals_;
+    std::vector<event_box*> event_boxes_;
 };
 
 }

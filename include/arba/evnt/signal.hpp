@@ -18,13 +18,13 @@ template<class Class, class R, class... Args> std::function<R (Args...)>
 slot (Class *object, R (Class::*method) (Args...)) { return Simple::slot(object, method); }
 
 template <typename Result>
-using Collector_until_0 = Simple::CollectorUntil0<Result>;
+using collector_until_0 = Simple::CollectorUntil0<Result>;
 
 template <typename Result>
-using Collector_while_0 = Simple::CollectorWhile0<Result>;
+using collector_while_0 = Simple::CollectorWhile0<Result>;
 
 template<typename Result>
-using Collector_vector = Simple::CollectorVector<Result>;
+using collector_vector = Simple::CollectorVector<Result>;
 
 }
 }
