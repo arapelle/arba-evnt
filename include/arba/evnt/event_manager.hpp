@@ -48,7 +48,7 @@ private:
             void(evt_listener::*receive)(event_type&) = &evt_listener::receive;
             listener_function function = std::bind(receive, &listener, std::placeholders::_1);
             std::size_t connection = signal_.connect(std::move(function));
-            listener.as_listener(static_cast<const event_type*>(nullptr))->set_connection(connection);
+            listener.as_listener(static_cast<const event_type*>(nullptr)).set_connection(connection);
         }
 
         inline void connect(listener_function&& listener)

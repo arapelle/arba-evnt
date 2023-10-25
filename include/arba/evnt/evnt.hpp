@@ -13,7 +13,7 @@ namespace evnt
 template <class event_type>
 inline void event_listener_base::break_connection(std::size_t connection)
 {
-    event_manager* evt_manager = this->evt_manager();
+    evnt::event_manager* evt_manager = event_manager_;
     if (evt_manager)
     {
         this->invalidate();
