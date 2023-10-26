@@ -8,28 +8,30 @@ namespace evnt
 event_box::~event_box()
 {
     std::lock_guard lock(mutex_);
-    if (parent_event_manager_)
+    if (listened_event_manager_)
     {
-        parent_event_manager_->disconnect(*this);
-        parent_event_manager_ = nullptr;
+        listened_event_manager_->disconnect(*this);
+        listened_event_manager_ = nullptr;
     }
 }
 
-void event_box::set_parent_event_manager(event_manager& evt_manager)
+void event_box::set_listened_event_manager_(evnt::event_manager& listened_event_manager)
 {
     std::lock_guard lock(mutex_);
-    assert(!parent_event_manager_);
-    parent_event_manager_ = &evt_manager;
-    event_queue_.reserve(evt_manager.number_of_event_types());
+    if (listened_event_manager_) [[unlikely]]
+        throw std::runtime_error("This event_box is already connected to an emitting event_manager.");
+    listened_event_manager_ = &listened_event_manager;
+    evt_queue_.reserve(listened_event_manager.number_of_event_types());
 }
 
-void event_box::set_parent_event_manager(std::nullptr_t)
+void event_box::reset_listened_event_manager_()
 {
     if (mutex_.try_lock())
     {
         std::lock_guard lock(mutex_, std::adopt_lock);
-        assert(parent_event_manager_);
-        parent_event_manager_ = nullptr;
+        if (!listened_event_manager_) [[unlikely]]
+            throw std::runtime_error("This event_box is expected to be connected to an emitting event_manager.");
+        listened_event_manager_ = nullptr;
     }
 }
 

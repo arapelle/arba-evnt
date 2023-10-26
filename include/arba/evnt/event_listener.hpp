@@ -10,6 +10,9 @@ namespace evnt
 
 class event_manager;
 
+template <class... event_types>
+class event_listener;
+
 class event_listener_base
 {
 protected:
@@ -18,8 +21,7 @@ protected:
         event_manager_ = nullptr;
     }
 
-    inline event_manager* evt_manager() { return event_manager_; }
-
+private:
     inline void invalidate()
     {
         assert(event_manager_);
@@ -30,23 +32,21 @@ protected:
     template <class event_type>
     inline void break_connection(std::size_t connection);
 
-private:
-    friend event_manager;
-
-    inline void set_event_manager(event_manager& evt_manager)
+    inline void set_event_manager(evnt::event_manager& evt_manager)
     {
         assert(!event_manager_ || event_manager_ == &evt_manager);
         event_manager_ = &evt_manager;
         ++counter_;
     }
 
+    template <class... event_types>
+    friend class event_listener;
+    friend class event_manager;
+
 private:
-    event_manager* event_manager_ = nullptr;
+    evnt::event_manager* event_manager_ = nullptr;
     std::atomic_uint16_t counter_ = 0;
 };
-
-template <class... event_types>
-class event_listener;
 
 template <class event_type>
 class event_listener<event_type> : public event_listener_base
@@ -64,10 +64,10 @@ public:
     void disconnect_all() { disconnect<event_type>(); }
 
 protected:
-    inline event_listener<event_type>* as_listener(const event_type*) { return this; }
+    inline event_listener<event_type>& as_listener(const event_type*) { return *this; }
 
 private:
-    friend event_manager;
+    friend class event_manager;
 
     void set_connection(std::size_t connection)
     {
@@ -94,10 +94,10 @@ public:
 
 protected:
     using event_listener<event_types...>::as_listener;
-    inline event_listener<event_type, event_types...>* as_listener(const event_type*) { return this; }
+    inline event_listener<event_type, event_types...>& as_listener(const event_type*) { return *this; }
 
 private:
-    friend event_manager;
+    friend class event_manager;
 
     void set_connection(std::size_t connection)
     {

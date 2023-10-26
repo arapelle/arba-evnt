@@ -13,7 +13,7 @@ namespace evnt
 template <class event_type>
 inline void event_listener_base::break_connection(std::size_t connection)
 {
-    event_manager* evt_manager = this->evt_manager();
+    evnt::event_manager* evt_manager = event_manager_;
     if (evt_manager)
     {
         this->invalidate();
@@ -25,10 +25,10 @@ template <class event_type>
 void event_manager::emit_to_event_boxes_(event_type& event)
 {
     std::lock_guard lock(mutex_);
-    for (event_box* dispatcher : event_boxs_)
+    for (event_box* evt_box : event_boxes_)
     {
-        assert(dispatcher);
-        dispatcher->push_event<event_type>(event);
+        assert(evt_box);
+        evt_box->receive_<event_type>(event);
     }
 }
 
