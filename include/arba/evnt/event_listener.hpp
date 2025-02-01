@@ -16,10 +16,7 @@ class event_listener;
 class event_listener_base
 {
 protected:
-    inline ~event_listener_base()
-    {
-        event_manager_ = nullptr;
-    }
+    inline ~event_listener_base() { event_manager_ = nullptr; }
 
 private:
     inline void invalidate()
@@ -52,14 +49,14 @@ template <class event_type>
 class event_listener<event_type> : public event_listener_base
 {
 public:
-    ~event_listener()
-    {
-        disconnect<event_type>();
-    }
+    ~event_listener() { disconnect<event_type>(); }
 
     template <class evt_type>
-    requires std::is_same_v<evt_type, event_type>
-    inline void disconnect() { this->event_listener_base::template break_connection<event_type>(connection_); }
+        requires std::is_same_v<evt_type, event_type>
+    inline void disconnect()
+    {
+        this->event_listener_base::template break_connection<event_type>(connection_);
+    }
 
     void disconnect_all() { disconnect<event_type>(); }
 
@@ -69,10 +66,7 @@ protected:
 private:
     friend class event_manager;
 
-    void set_connection(std::size_t connection)
-    {
-        connection_ = connection;
-    }
+    void set_connection(std::size_t connection) { connection_ = connection; }
 
     std::size_t connection_;
 };
@@ -81,16 +75,20 @@ template <class event_type, class... event_types>
 class event_listener<event_type, event_types...> : public event_listener<event_types...>
 {
 public:
-    ~event_listener()
-    {
-        disconnect<event_type>();
-    }
+    ~event_listener() { disconnect<event_type>(); }
 
     template <class evt_type>
-    requires std::is_same_v<evt_type, event_type>
-    inline void disconnect() { this->event_listener<event_types...>::template break_connection<event_type>(connection_); }
+        requires std::is_same_v<evt_type, event_type>
+    inline void disconnect()
+    {
+        this->event_listener<event_types...>::template break_connection<event_type>(connection_);
+    }
 
-    void disconnect_all() { disconnect<event_type>(); this->event_listener<event_types...>::disconnect_all(); }
+    void disconnect_all()
+    {
+        disconnect<event_type>();
+        this->event_listener<event_types...>::disconnect_all();
+    }
 
 protected:
     using event_listener<event_types...>::as_listener;
@@ -99,13 +97,10 @@ protected:
 private:
     friend class event_manager;
 
-    void set_connection(std::size_t connection)
-    {
-        connection_ = connection;
-    }
+    void set_connection(std::size_t connection) { connection_ = connection; }
 
     std::size_t connection_;
 };
 
-}
-}
+} // namespace evnt
+} // namespace arba

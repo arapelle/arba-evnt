@@ -1,9 +1,9 @@
-#pragma once 
+#pragma once
 
-#include "event_listener.hpp"
-#include "event_manager.hpp"
 #include "async_event_queue.hpp"
 #include "event_box.hpp"
+#include "event_listener.hpp"
+#include "event_manager.hpp"
 
 inline namespace arba
 {
@@ -32,5 +32,5 @@ void event_manager::emit_to_event_boxes_(event_type& event)
     }
 }
 
-}
-}
+} // namespace evnt
+} // namespace arba

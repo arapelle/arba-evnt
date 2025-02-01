@@ -1,4 +1,5 @@
 #include <arba/evnt/async_event_queue.hpp>
+
 #include <ranges>
 #include <span>
 
@@ -46,5 +47,5 @@ void async_event_queue::forward_events_to(event_manager& evt_manager)
             queue_uptr->forward_events_to(evt_manager);
 }
 
-}
-}
+} // namespace evnt
+} // namespace arba

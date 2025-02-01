@@ -35,5 +35,5 @@ void event_box::reset_listened_event_manager_()
     }
 }
 
-}
-}
+} // namespace evnt
+} // namespace arba
