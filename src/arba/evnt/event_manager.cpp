@@ -1,6 +1,8 @@
 #include <arba/evnt/event_manager.hpp>
 #include <arba/evnt/event_box.hpp>
 
+#include <algorithm>
+
 inline namespace arba
 {
 namespace evnt
