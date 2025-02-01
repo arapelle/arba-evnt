@@ -1,4 +1,5 @@
 #include <arba/evnt/evnt.hpp>
+
 #include <iostream>
 
 class int_event
@@ -14,10 +15,7 @@ int main()
     evnt::event_manager other_event_manager;
 
     int value = 0;
-    other_event_manager.connect<int_event>([&value](int_event& event)
-                                           {
-                                               value = event.value;
-                                           });
+    other_event_manager.connect<int_event>([&value](int_event& event) { value = event.value; });
 
     event_manager.emit(int_event{ 7 });
     std::cout << value << std::endl; // 0

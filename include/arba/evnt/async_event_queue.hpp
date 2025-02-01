@@ -1,10 +1,11 @@
 #pragma once
 
 #include "event_manager.hpp"
+
+#include <memory>
 #include <mutex>
 #include <shared_mutex>
 #include <vector>
-#include <memory>
 
 inline namespace arba
 {
@@ -107,5 +108,5 @@ private:
     std::vector<async_event_queue_interface_uptr_> event_queues_;
 };
 
-}
-}
+} // namespace evnt
+} // namespace arba

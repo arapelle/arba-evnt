@@ -1,5 +1,7 @@
-#include <arba/evnt/event_manager.hpp>
 #include <arba/evnt/event_box.hpp>
+#include <arba/evnt/event_manager.hpp>
+
+#include <algorithm>
 
 inline namespace arba
 {
@@ -60,5 +62,5 @@ void event_manager::emit(event_box& event_box, bool pre_sync)
         event_box.event_queue_().forward_events_to(*this);
 }
 
-}
-}
+} // namespace evnt
+} // namespace arba

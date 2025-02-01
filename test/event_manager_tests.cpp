@@ -1,5 +1,7 @@
 #include <arba/evnt/evnt.hpp>
+
 #include <gtest/gtest.h>
+
 #include <cstdlib>
 
 TEST(event_manager_tests, test_constructor_no_parameter)
@@ -18,10 +20,7 @@ TEST(event_manager_tests, test_emit_event_lvalue_reference)
 {
     arba::evnt::event_manager event_manager;
     int value = 0;
-    event_manager.connect<int_event>([&value](int_event& event)
-    {
-        value = event.value;
-    });
+    event_manager.connect<int_event>([&value](int_event& event) { value = event.value; });
     ASSERT_EQ(event_manager.number_of_event_types(), 1);
 
     int_event evt{ 5 };
@@ -33,10 +32,7 @@ TEST(event_manager_tests, test_emit_event_rvalue_reference)
 {
     evnt::event_manager event_manager;
     int value = 0;
-    event_manager.connect<int_event>([&value](int_event& event)
-    {
-        value = event.value;
-    });
+    event_manager.connect<int_event>([&value](int_event& event) { value = event.value; });
 
     int_event evt{ 5 };
     event_manager.emit(evt);
@@ -46,9 +42,7 @@ TEST(event_manager_tests, test_emit_event_rvalue_reference)
 class int_event_Listener : public evnt::event_listener<int_event>
 {
 public:
-    int_event_Listener(int& value)
-    : value_ptr(&value)
-    {}
+    int_event_Listener(int& value) : value_ptr(&value) {}
 
     ~int_event_Listener()
     {
@@ -56,10 +50,7 @@ public:
             *value_ptr *= 10;
     }
 
-    void receive(int_event& event)
-    {
-        *value_ptr = event.value;
-    }
+    void receive(int_event& event) { *value_ptr = event.value; }
 
     int* value_ptr;
 };
@@ -121,9 +112,7 @@ public:
 class multi_event_listener : public evnt::event_listener<int_event, int_event_2>
 {
 public:
-    multi_event_listener(int& value, int& value_2)
-    : value_ptr(&value), value_ptr_2(&value_2)
-    {}
+    multi_event_listener(int& value, int& value_2) : value_ptr(&value), value_ptr_2(&value_2) {}
 
     ~multi_event_listener()
     {
@@ -131,15 +120,9 @@ public:
         *value_ptr_2 += 100;
     }
 
-    void receive(int_event& event)
-    {
-        *value_ptr = event.value + 1;
-    }
+    void receive(int_event& event) { *value_ptr = event.value + 1; }
 
-    void receive(int_event_2& event)
-    {
-        *value_ptr_2 = event.value + 2;
-    }
+    void receive(int_event_2& event) { *value_ptr_2 = event.value + 2; }
 
     int* value_ptr;
     int* value_ptr_2;

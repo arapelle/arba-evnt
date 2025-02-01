@@ -39,5 +39,5 @@ private:
     async_event_queue evt_queue_;
 };
 
-}
-}
+} // namespace evnt
+} // namespace arba

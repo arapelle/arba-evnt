@@ -1,6 +1,6 @@
 # Concept
 
-The purpose is to provide C++ event managing tools.
+A C++ library providing tools to manage events.
 
 - event_listener
 - event_manager
@@ -11,16 +11,28 @@ The purpose is to provide C++ event managing tools.
 ## Requirements
 
 Binaries:
-- A C++20 compiler (ex: g++-10)
-- CMake 3.16 or later
+- A C++20 compiler (ex: g++-14)
+- CMake 3.26 or later
 
 Testing Libraries (optional):
-- [Google Test](https://github.com/google/googletest) 1.13 or later  (optional)
+- [Google Test](https://github.com/google/googletest) 1.14 or later  (optional)
 
 ## Clone
 
 ```
-git clone https://github.com/arapelle/arba-evnt --recurse-submodules
+git clone https://github.com/arapelle/arba-evnt
+```
+
+## Use with `conan`
+
+Create the conan package.
+```
+conan create . --build=missing -c
+```
+Add a requirement in your conanfile project file.
+```python
+    def requirements(self):
+        self.requires("arba-evnt/0.1.0")
 ```
 
 ## Quick Install
@@ -73,10 +85,6 @@ int main()
     return EXIT_SUCCESS;
 }
 ```
-
-## Example - Using *arba-evnt* in a CMake project
-
-See *basic_cmake_project* in example, and more specifically the *CMakeLists.txt* to see how to use *arba-evnt* in your CMake projects.
 
 # License
 
